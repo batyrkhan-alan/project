@@ -1,0 +1,172 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление семейными закупками</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        section {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 45%;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        #add-item-form button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Управление семейными закупками</h1>
+    </header>
+    <main>
+        <section id="shopping-list">
+            <h2>Список покупок</h2>
+            <ul id="items-list">
+                <!-- Здесь будут отображаться товары -->
+            </ul>
+            <form id="add-item-form">
+                <input type="text" id="item-input" placeholder="Введите товар">
+                <button type="button" onclick="addItemToList()">Добавить</button>
+            </form>
+            <button onclick="clearItemList()">Очистить список</button>
+        </section>
+        <section id="family-members">
+            <h2>Члены семьи</h2>
+            <ul id="members-list">
+                <!-- Здесь будут отображаться члены семьи -->
+            </ul>
+            <form id="add-member-form">
+                <input type="text" id="member-name" placeholder="Имя">
+                <input type="text" id="member-role" placeholder="Роль">
+                <button type="button" onclick="addFamilyMember()">Добавить</button>
+            </form>
+            <button onclick="clearMembersList()">Очистить список</button>
+        </section>
+    </main>
+    <script>
+        function addItemToList() {
+            var newItem = document.getElementById("item-input").value;
+            if (newItem.trim() !== "") {
+                var li = document.createElement("li");
+                li.textContent = newItem;
+                var alternativeBtn = document.createElement("button");
+                alternativeBtn.textContent = "Альтернативный товар";
+                alternativeBtn.onclick = addAlternative;
+                li.appendChild(alternativeBtn);
+                var commentBtn = document.createElement("button");
+                commentBtn.textContent = "Добавить комментарий";
+                commentBtn.onclick = addComment;
+                li.appendChild(commentBtn);
+                document.getElementById("items-list").appendChild(li);
+                document.getElementById("item-input").value = "";
+            }
+        }
+
+        function clearItemList() {
+            var list = document.getElementById("items-list");
+            while (list.firstChild) {
+                list.removeChild(list.firstChild);
+            }
+        }
+
+        function addFamilyMember() {
+            var name = document.getElementById("member-name").value;
+            var role = document.getElementById("member-role").value;
+            if (name.trim() !== "" && role.trim() !== "") {
+                var li = document.createElement("li");
+                li.textContent = name + " - " + role;
+                document.getElementById("members-list").appendChild(li);
+                document.getElementById("member-name").value = "";
+                document.getElementById("member-role").value = "";
+            }
+        }
+
+        function clearMembersList() {
+            var list = document.getElementById("members-list");
+            while (list.firstChild) {
+                list.removeChild(list.firstChild);
+            }
+        }
+
+        function addAlternative() {
+            var item = prompt("Введите альтернативный товар:", "");
+            if (item !== null && item.trim() !== "") {
+                var li = document.createElement("li");
+                li.textContent = "Альтернативный товар: " + item;
+                document.getElementById("items-list").appendChild(li);
+            }
+        }
+
+        function addComment() {
+            var item = prompt("Введите комментарий к товару:", "");
+            if (item !== null && item.trim() !== "") {
+                var li = document.createElement("li");
+                li.textContent = "Комментарий: " + item;
+                document.getElementById("items-list").appendChild(li);
+            }
+        }
+    </script>
+</body>
+</html>
